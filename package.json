@@ -1,0 +1,16 @@
+{
+  "name": "cryptokitties-xdai-demo",
+  "version": "1.0.0",
+  "repository": "https://github.com/poanetwork/cryptokitties-xdai-demo.git",
+  "license": "GPL-3.0-only",
+  "scripts": {
+    "compile": "truffle compile",
+    "flatten": "bash scripts/flatten.sh"
+  },
+  "dependencies": {
+    "truffle": "^5.0.35"
+  },
+  "devDependencies": {
+    "truffle-flattener": "^1.4.2"
+  }
+}
