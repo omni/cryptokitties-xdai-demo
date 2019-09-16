@@ -6,7 +6,8 @@
   "scripts": {
     "compile": "truffle compile",
     "flatten": "bash scripts/flatten.sh",
-    "deploy": "node deploy/index.js"
+    "deploy": "node deploy/index.js",
+    "lint": "eslint ."
   },
   "dependencies": {
     "bignumber.js": "^9.0.0",
@@ -18,6 +19,16 @@
     "web3-utils": "^1.2.1"
   },
   "devDependencies": {
+    "eslint": "^6.4.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "prettier": "^1.18.2",
     "truffle-flattener": "^1.4.2"
+  },
+  "engines": {
+    "node": ">= 8.9"
   }
 }

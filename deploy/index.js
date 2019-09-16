@@ -1,7 +1,14 @@
 const assert = require('assert')
 const Web3Utils = require('web3-utils')
 const kittyCore = require('../build/contracts/KittyCore')
-const { deployContract, privateKeyToAddress, web3Foreign, deploymentPrivateKey, sendRawTxForeign } = require('./deploymentUtils')
+const {
+  deployContract,
+  privateKeyToAddress,
+  web3Foreign,
+  deploymentPrivateKey,
+  sendRawTxForeign
+} = require('./deploymentUtils')
+
 const { DEPLOYMENT_ACCOUNT_PRIVATE_KEY, KITTIES_AMOUNT, FOREIGN_RPC_URL } = process.env
 
 async function main() {
@@ -23,9 +30,7 @@ async function main() {
   if (kittiesAmount) {
     console.log('Minting kitties to', accountAddress)
     for (let i = 1; i <= kittiesAmount; i++) {
-      const mintData = await kittyCoreContract.methods
-        .createPromoKitty(i, accountAddress)
-        .encodeABI()
+      const mintData = await kittyCoreContract.methods.createPromoKitty(i, accountAddress).encodeABI()
       const txMint = await sendRawTxForeign({
         data: mintData,
         nonce,
@@ -38,8 +43,6 @@ async function main() {
       nonce++
     }
   }
-
 }
-
 
 main().catch(e => console.log(e))

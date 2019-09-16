@@ -1,6 +1,6 @@
 # cryptokitties-xdai-demo
 
-#### Install
+#### Install dependencies
 ```bash
 yarn
 ```
