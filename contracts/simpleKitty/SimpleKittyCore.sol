@@ -24,8 +24,8 @@ contract SimpleKittyCore is SimpleKittyOwnership {
         Kitty storage kit = kitties[_id];
 
         // if this variable is 0 then it's not gestating
-        isGestating = (kit.siringWithId != 0);
-        isReady = (kit.cooldownEndBlock <= block.number);
+        isGestating = kit.isGestating;
+        isReady = kit.isReady;
         cooldownIndex = uint256(kit.cooldownIndex);
         nextActionAt = uint256(kit.cooldownEndBlock);
         siringWithId = uint256(kit.siringWithId);

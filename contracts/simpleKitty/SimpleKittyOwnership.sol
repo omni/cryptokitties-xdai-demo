@@ -128,7 +128,7 @@ contract SimpleKittyOwnership is SimpleKittyBase, ERC721 {
     /// @notice Returns the total number of Kitties currently in existence.
     /// @dev Required for ERC-721 compliance.
     function totalSupply() public view returns (uint256) {
-        return kitties.length - 1;
+        return kittyTotalSupply;
     }
 
     /// @notice Returns the address currently assigned ownership of a given Kitty.
