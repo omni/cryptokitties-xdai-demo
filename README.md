@@ -26,6 +26,8 @@ HOME_DEPLOYMENT_GAS_PRICE=1000000000
 FOREIGN_RPC_URL=https://sokol.poa.network
 # The "gasPrice" parameter set in every deployment/configuration transaction on Foreign network (in Wei).
 FOREIGN_DEPLOYMENT_GAS_PRICE=1000000000
+# Cryptokitties contract address on Foreign network. If not defined or set to address zero, the contract will be deployed on Foreign network.
+CRYPTOKITTIES_ADDRESS=0x0000000000000000000000000000000000000000
 # Amount of Kitties to Mint on Foreign network
 KITTIES_AMOUNT=1
 ```
