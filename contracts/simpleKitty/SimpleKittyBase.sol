@@ -52,7 +52,6 @@ contract SimpleKittyBase {
         // numbers of their parents, plus one.
         // (i.e. max(matron.generation, sire.generation) + 1)
         uint16 generation;
-        bool isGestating;
         bool isReady;
     }
 
@@ -97,7 +96,6 @@ contract SimpleKittyBase {
     /// @param _owner The inital owner of this cat, must be non-zero (except for the unKitty, ID 0)
     function _createKitty(
         uint256 _tokenId,
-        bool _isGestating,
         bool _isReady,
         uint256 _cooldownIndex,
         uint256 _nextActionAt,
@@ -126,7 +124,6 @@ contract SimpleKittyBase {
             siringWithId: uint32(_siringWithId),
             cooldownIndex: uint16(_cooldownIndex),
             generation: uint16(_generation),
-            isGestating: _isGestating,
             isReady: _isReady
         });
         kitties[_tokenId] = _kitty;
