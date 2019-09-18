@@ -1,0 +1,13 @@
+{
+  "extends": "solhint:recommended",
+  "plugins": ["prettier"],
+  "rules": {
+    "prettier/prettier": "error",
+    "mark-callable-contracts": "off",
+    "bracket-align": "off",
+    "not-rely-on-time": "off",
+    "const-name-snakecase": "off",
+    "no-inline-assembly": "off",
+    "compiler-version": ["error", "0.4.24"]
+  }
+}

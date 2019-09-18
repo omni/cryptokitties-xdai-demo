@@ -7,7 +7,11 @@
     "compile": "truffle compile",
     "flatten": "bash scripts/flatten.sh",
     "deploy": "node deploy/index.js",
-    "lint": "eslint ."
+    "lint": "npm run lint:js && npm run lint:sol",
+    "lint:js": "eslint .",
+    "lint:js:fix": "eslint . --fix",
+    "lint:sol": "solhint --max-warnings 0 \"contracts/**/*.sol\"",
+    "lint:sol:prettier:fix": "prettier --write **/*.sol"
   },
   "dependencies": {
     "bignumber.js": "^9.0.0",
@@ -26,6 +30,9 @@
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-prettier": "^3.1.0",
     "prettier": "^1.18.2",
+    "prettier-plugin-solidity": "^1.0.0-alpha.32",
+    "solhint": "^2.2.0",
+    "solhint-plugin-prettier": "^0.0.3",
     "truffle-flattener": "^1.4.2"
   },
   "engines": {
