@@ -116,5 +116,5 @@ contract BasicMediator is Initializable, AMBMediator, ERC721Bridge, Upgradeable,
 
     function fixFailedMessage(bytes32 _dataHash) external;
 
-    function bridgeSpecificActionsOnTokenTransfer(ERC721 _token, address _from, uint256 _tokenId) internal;
+    function bridgeSpecificActionsOnTokenTransfer(address _from, uint256 _tokenId) internal;
 }

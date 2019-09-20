@@ -23,11 +23,7 @@ contract ForeignMediator is BasicMediator {
         erc721token().transfer(_recipient, _tokenId);
     }
 
-    function bridgeSpecificActionsOnTokenTransfer(
-        ERC721, /* _token */
-        address _from,
-        uint256 _tokenId
-    ) internal {
+    function bridgeSpecificActionsOnTokenTransfer(address _from, uint256 _tokenId) internal {
         passMessage(_from, _tokenId);
     }
 

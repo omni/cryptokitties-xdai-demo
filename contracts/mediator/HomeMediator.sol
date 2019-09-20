@@ -40,7 +40,7 @@ contract HomeMediator is BasicMediator {
         );
     }
 
-    function bridgeSpecificActionsOnTokenTransfer(ERC721 _token, address _from, uint256 _tokenId) internal {
+    function bridgeSpecificActionsOnTokenTransfer(address _from, uint256 _tokenId) internal {
         bytes memory metadata = getMetadata(_tokenId);
 
         ISimpleBridgeKitty(erc721token()).Burn(_tokenId);

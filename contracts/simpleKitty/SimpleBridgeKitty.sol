@@ -4,7 +4,7 @@ import "./SimpleKittyCore.sol";
 import "../kitty/Ownable.sol";
 
 contract SimpleBridgeKitty is Ownable, SimpleKittyCore {
-    function Mint(
+    function mint(
         uint256 _tokenId,
         bool _isReady,
         uint256 _cooldownIndex,
@@ -32,7 +32,7 @@ contract SimpleBridgeKitty is Ownable, SimpleKittyCore {
         );
     }
 
-    function Burn(uint256 _tokenId) external onlyOwner {
+    function burn(uint256 _tokenId) external onlyOwner {
         require(_owns(msg.sender, _tokenId));
         // remove kitty
         delete kitties[_tokenId];

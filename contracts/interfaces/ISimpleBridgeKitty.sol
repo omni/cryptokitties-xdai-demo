@@ -1,7 +1,7 @@
 pragma solidity 0.4.24;
 
 interface ISimpleBridgeKitty {
-    function Mint(
+    function mint(
         uint256 _tokenId,
         bool _isReady,
         uint256 _cooldownIndex,
@@ -14,5 +14,5 @@ interface ISimpleBridgeKitty {
         uint256 _genes,
         address _owner
     ) external;
-    function Burn(uint256 _tokenId) external;
+    function burn(uint256 _tokenId) external;
 }
