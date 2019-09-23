@@ -25,7 +25,7 @@ contract HomeMediator is BasicMediator {
     }
 
     function mintToken(address _recipient, uint256 _tokenId, bytes _metadata) internal {
-        ISimpleBridgeKitty(erc721token()).Mint(
+        ISimpleBridgeKitty(erc721token()).mint(
             _tokenId,
             getMetadataBoolValue(_metadata, 1), // isReady
             getMetadataUintValue(_metadata, 2), // cooldownIndex
@@ -43,7 +43,7 @@ contract HomeMediator is BasicMediator {
     function bridgeSpecificActionsOnTokenTransfer(address _from, uint256 _tokenId) internal {
         bytes memory metadata = getMetadata(_tokenId);
 
-        ISimpleBridgeKitty(erc721token()).Burn(_tokenId);
+        ISimpleBridgeKitty(erc721token()).burn(_tokenId);
         passMessage(_from, _tokenId, metadata);
     }
 

@@ -45,7 +45,7 @@ contract BasicMediator is Initializable, AMBMediator, ERC721Bridge, Upgradeable,
         address to = address(this);
 
         token.transferFrom(from, to, _tokenId);
-        bridgeSpecificActionsOnTokenTransfer(token, from, _tokenId);
+        bridgeSpecificActionsOnTokenTransfer(from, _tokenId);
     }
 
     /**
