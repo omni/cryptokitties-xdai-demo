@@ -14,6 +14,7 @@
     "no-console": "off",
     "no-plusplus": "off",
     "no-use-before-define": ["error", { "functions": false }],
-    "node/no-unpublished-require": "off"
+    "node/no-unpublished-require": "off",
+    "func-names": "off"
   }
 }
