@@ -1,6 +1,13 @@
 {
   "extends": ["plugin:node/recommended", "airbnb-base", "plugin:prettier/recommended"],
   "plugins": ["node"],
+  "env": {
+    "mocha": true
+  },
+  "globals": {
+    "artifacts": false,
+    "contract": false
+  },
   "rules": {
     "no-await-in-loop": "off",
     "consistent-return": "off",

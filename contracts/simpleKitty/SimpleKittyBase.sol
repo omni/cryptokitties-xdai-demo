@@ -87,7 +87,7 @@ contract SimpleKittyBase {
             delete kittyIndexToApproved[_tokenId];
         }
         // Emit the transfer event.
-        Transfer(_from, _to, _tokenId);
+        emit Transfer(_from, _to, _tokenId);
     }
 
     /// @dev An internal method that creates a new kitty and stores it.
@@ -130,7 +130,7 @@ contract SimpleKittyBase {
         kittyTotalSupply++;
 
         // emit the birth event
-        Birth(_owner, _tokenId, uint256(_kitty.matronId), uint256(_kitty.sireId), _kitty.genes);
+        emit Birth(_owner, _tokenId, uint256(_kitty.matronId), uint256(_kitty.sireId), _kitty.genes);
 
         // This will assign ownership, and also emit the Transfer event as
         // per ERC721 draft

@@ -4,6 +4,8 @@ import "./SimpleKittyCore.sol";
 import "../kitty/Ownable.sol";
 
 contract SimpleBridgeKitty is Ownable, SimpleKittyCore {
+    event Death(uint256 kittyId);
+
     function mint(
         uint256 _tokenId,
         bool _isReady,
@@ -42,5 +44,6 @@ contract SimpleBridgeKitty is Ownable, SimpleKittyCore {
         delete kittyIndexToOwner[_tokenId];
         // reduce owner token account
         ownershipTokenCount[msg.sender]--;
+        emit Death(_tokenId);
     }
 }

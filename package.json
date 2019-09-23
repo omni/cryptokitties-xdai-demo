@@ -11,7 +11,8 @@
     "lint:js": "eslint .",
     "lint:js:fix": "eslint . --fix",
     "lint:sol": "solhint --max-warnings 0 \"contracts/**/*.sol\"",
-    "lint:sol:prettier:fix": "prettier --write **/*.sol"
+    "lint:sol:prettier:fix": "prettier --write **/*.sol",
+    "test": "truffle test"
   },
   "dependencies": {
     "bignumber.js": "^9.0.0",
@@ -24,12 +25,14 @@
     "web3-utils": "^1.2.1"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
     "eslint": "^6.4.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-config-prettier": "^6.3.0",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-prettier": "^3.1.0",
+    "openzeppelin-test-helpers": "^0.4.3",
     "prettier": "^1.18.2",
     "prettier-plugin-solidity": "^1.0.0-alpha.32",
     "solhint": "^2.2.0",

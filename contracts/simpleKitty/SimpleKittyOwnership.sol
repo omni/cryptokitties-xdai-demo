@@ -100,7 +100,7 @@ contract SimpleKittyOwnership is SimpleKittyBase, ERC721 {
         _approve(_tokenId, _to);
 
         // Emit approval event.
-        Approval(msg.sender, _to, _tokenId);
+        emit Approval(msg.sender, _to, _tokenId);
     }
 
     /// @notice Transfer a Kitty owned by another address, for which the calling address
