@@ -61,12 +61,13 @@ contract BasicMediator is Initializable, AMBMediator, ERC721Bridge, Upgradeable,
     *       uint256 generation,
     *       uint256 genes
     **/
-    function getMetadata(uint256 _tokenId) internal returns (bytes memory metadata) {
+    function getMetadata(uint256 _tokenId) internal view returns (bytes memory metadata) {
         bytes memory callData = abi.encodeWithSelector(GET_KITTY, _tokenId);
         address tokenAddress = erc721token();
+        metadata = new bytes(320);
         assembly {
-            let result := callcode(gas, tokenAddress, 0x0, add(callData, 0x20), mload(callData), 0, 320)
-            metadata := mload(0)
+            let result := call(gas, tokenAddress, 0x0, add(callData, 0x20), mload(callData), 0, 0)
+            returndatacopy(add(metadata, 0x20), 0, returndatasize)
 
             switch result
                 case 0 {
