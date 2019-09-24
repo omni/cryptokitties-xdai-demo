@@ -6,7 +6,8 @@
   },
   "globals": {
     "artifacts": false,
-    "contract": false
+    "contract": false,
+    "web3": false
   },
   "rules": {
     "no-await-in-loop": "off",

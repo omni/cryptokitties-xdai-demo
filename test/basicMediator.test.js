@@ -4,7 +4,21 @@ const AMBMock = artifacts.require('AMBMock.sol')
 const { expect } = require('chai')
 const { ether, constants, expectRevert } = require('openzeppelin-test-helpers')
 
-const maxGasPerTx = ether('1')
+const {
+  maxGasPerTx,
+  tokenId,
+  isReady,
+  cooldownIndex,
+  nextActionAt,
+  siringWithId,
+  birthTime,
+  matronId,
+  sireId,
+  generation,
+  genes,
+  metadata,
+  exampleTxHash
+} = require('./helpers')
 
 function shouldBehaveLikeBasicMediator(accounts) {
   describe('shouldBehaveLikeBasicMediator', () => {
@@ -163,6 +177,135 @@ function shouldBehaveLikeBasicMediator(accounts) {
         expect(major).to.be.bignumber.gte('0')
         expect(minor).to.be.bignumber.gte('0')
         expect(patch).to.be.bignumber.gte('0')
+      })
+    })
+    describe('requestFailedMessageFix', () => {
+      let contract
+      let mediatorContractOnOtherSide
+      let data
+      const user = accounts[1]
+      beforeEach(async function() {
+        bridgeContract = await AMBMock.new()
+        await bridgeContract.setMaxGasPerTx(maxGasPerTx)
+        erc721token = await SimpleBridgeKitty.new()
+
+        contract = this.bridge
+        mediatorContractOnOtherSide = await this.mediatorContractOnOtherSide.new()
+
+        await contract.initialize(
+          bridgeContract.address,
+          mediatorContractOnOtherSide.address,
+          erc721token.address,
+          maxGasPerTx,
+          owner
+        )
+        try {
+          data = await contract.contract.methods.handleBridgedTokens(user, tokenId).encodeABI()
+          await erc721token.mint(
+            tokenId,
+            isReady,
+            cooldownIndex,
+            nextActionAt,
+            siringWithId,
+            birthTime,
+            matronId,
+            sireId,
+            generation,
+            genes,
+            contract.address,
+            { from: owner }
+          )
+        } catch (e) {
+          data = await contract.contract.methods.handleBridgedTokens(user, tokenId, metadata).encodeABI()
+          await erc721token.transferOwnership(contract.address, { from: owner })
+        }
+      })
+      it('should  allow to request a failed message fix', async () => {
+        // Given
+        await bridgeContract.executeMessageCall(
+          contract.address,
+          mediatorContractOnOtherSide.address,
+          data,
+          exampleTxHash,
+          100
+        )
+        expect(await bridgeContract.messageCallStatus(exampleTxHash)).to.be.equal(false)
+
+        const dataHash = await bridgeContract.failedMessageDataHash(exampleTxHash)
+
+        // When
+        const { tx } = await contract.requestFailedMessageFix(exampleTxHash)
+
+        // Then
+        const receipt = await web3.eth.getTransactionReceipt(tx)
+        const logs = AMBMock.decodeLogs(receipt.logs)
+        expect(logs.length).to.be.equal(1)
+        expect(logs[0].args.encodedData.includes(dataHash.replace(/^0x/, ''))).to.be.equal(true)
+      })
+      it('should be a failed transaction', async () => {
+        // Given
+        await bridgeContract.executeMessageCall(
+          contract.address,
+          mediatorContractOnOtherSide.address,
+          data,
+          exampleTxHash,
+          1000000
+        )
+        expect(await bridgeContract.messageCallStatus(exampleTxHash)).to.be.equal(true)
+
+        // When
+        await expectRevert.unspecified(contract.requestFailedMessageFix(exampleTxHash))
+      })
+      it('should be the receiver of the failed transaction', async () => {
+        // Given
+        await bridgeContract.executeMessageCall(
+          bridgeContract.address,
+          mediatorContractOnOtherSide.address,
+          data,
+          exampleTxHash,
+          1000000
+        )
+        expect(await bridgeContract.messageCallStatus(exampleTxHash)).to.be.equal(false)
+
+        // When
+        await expectRevert.unspecified(contract.requestFailedMessageFix(exampleTxHash))
+      })
+      it('message sender should be mediator from other side', async () => {
+        // Given
+        await bridgeContract.executeMessageCall(contract.address, contract.address, data, exampleTxHash, 1000000)
+        expect(await bridgeContract.messageCallStatus(exampleTxHash)).to.be.equal(false)
+
+        // When
+        await expectRevert.unspecified(contract.requestFailedMessageFix(exampleTxHash))
+      })
+      it('should allow to request a fix multiple times', async () => {
+        // Given
+        await bridgeContract.executeMessageCall(
+          contract.address,
+          mediatorContractOnOtherSide.address,
+          data,
+          exampleTxHash,
+          100
+        )
+        expect(await bridgeContract.messageCallStatus(exampleTxHash)).to.be.equal(false)
+
+        const dataHash = await bridgeContract.failedMessageDataHash(exampleTxHash)
+
+        const { tx } = await contract.requestFailedMessageFix(exampleTxHash)
+
+        const receipt = await web3.eth.getTransactionReceipt(tx)
+        const logs = AMBMock.decodeLogs(receipt.logs)
+        expect(logs.length).to.be.equal(1)
+        expect(logs[0].args.encodedData.includes(dataHash.replace(/^0x/, ''))).to.be.equal(true)
+
+        // When
+        const { tx: secondTx } = await contract.requestFailedMessageFix(exampleTxHash)
+
+        // Then
+        const secondReceipt = await web3.eth.getTransactionReceipt(secondTx)
+        const secondLogs = AMBMock.decodeLogs(secondReceipt.logs)
+        expect(secondLogs.length).to.be.equal(1)
+        expect(secondLogs[0].args.encodedData.includes(dataHash.replace(/^0x/, ''))).to.be.equal(true)
       })
     })
   })
