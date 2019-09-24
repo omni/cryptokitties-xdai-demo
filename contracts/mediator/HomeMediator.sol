@@ -27,15 +27,15 @@ contract HomeMediator is BasicMediator {
     function mintToken(address _recipient, uint256 _tokenId, bytes _metadata) internal {
         ISimpleBridgeKitty(erc721token()).mint(
             _tokenId,
-            getMetadataBoolValue(_metadata, 1), // isReady
-            getMetadataUintValue(_metadata, 2), // cooldownIndex
-            getMetadataUintValue(_metadata, 3), // nextActionAt
-            getMetadataUintValue(_metadata, 4), // siringWithId
-            getMetadataUintValue(_metadata, 5), // birthTime
-            getMetadataUintValue(_metadata, 6), // matronId
-            getMetadataUintValue(_metadata, 7), // sireId
-            getMetadataUintValue(_metadata, 8), // generation
-            getMetadataUintValue(_metadata, 9), // genes
+            getMetadataBoolValue(_metadata, 2), // isReady
+            getMetadataUintValue(_metadata, 3), // cooldownIndex
+            getMetadataUintValue(_metadata, 4), // nextActionAt
+            getMetadataUintValue(_metadata, 5), // siringWithId
+            getMetadataUintValue(_metadata, 6), // birthTime
+            getMetadataUintValue(_metadata, 7), // matronId
+            getMetadataUintValue(_metadata, 8), // sireId
+            getMetadataUintValue(_metadata, 9), // generation
+            getMetadataUintValue(_metadata, 10), // genes
             _recipient
         );
     }
