@@ -1,7 +1,7 @@
 pragma solidity 0.4.24;
 
-import "./EternalStorage.sol";
-import "./OwnedUpgradeabilityProxy.sol";
+import "../../bridge-contracts/contracts/upgradeability/EternalStorage.sol";
+import "../../bridge-contracts/contracts/upgradeability/OwnedUpgradeabilityProxy.sol";
 
 /**
  * @title EternalStorageProxy

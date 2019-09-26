@@ -1,8 +1,13 @@
 # cryptokitties-xdai-demo
 
-#### Install dependencies
+#### Clone the repository
 ```bash
-yarn
+git clone https://github.com/poanetwork/cryptokitties-xdai-demo.git
+```
+
+#### Initialize submodule and install dependencies
+```bash
+yarn initialize
 ```
 
 #### Compile contracts
@@ -58,6 +63,12 @@ Then
 ```
 yarn deploy
 ```
+
+#### Tests
+```bash
+yarn test
+```
+
 
 #### Flat contracts
 ```bash

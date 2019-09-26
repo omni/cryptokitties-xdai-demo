@@ -1,10 +1,10 @@
 pragma solidity 0.4.24;
 
-import "./Initializable.sol";
+import "../../bridge-contracts/contracts/upgradeable_contracts/Initializable.sol";
+import "../../bridge-contracts/contracts/upgradeable_contracts/Claimable.sol";
+import "../../bridge-contracts/contracts/upgradeable_contracts/Upgradeable.sol";
 import "./AMBMediator.sol";
 import "./ERC721Bridge.sol";
-import "./Claimable.sol";
-import "./Upgradeable.sol";
 
 contract BasicMediator is Initializable, AMBMediator, ERC721Bridge, Upgradeable, Claimable {
     event FailedMessageFixed(bytes32 indexed dataHash, address recipient, uint256 tokenId);

@@ -2,7 +2,7 @@ pragma solidity 0.4.24;
 
 import "../kitty/ERC721.sol";
 import "openzeppelin-solidity/contracts/AddressUtils.sol";
-import "../upgradeability/EternalStorage.sol";
+import "../../bridge-contracts/contracts/upgradeability/EternalStorage.sol";
 
 contract ERC721Bridge is EternalStorage {
     bytes32 internal constant ERC721_TOKEN = keccak256(abi.encodePacked("erc721token"));

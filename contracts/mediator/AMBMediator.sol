@@ -1,11 +1,11 @@
 pragma solidity 0.4.24;
 
-import "../upgradeability/EternalStorage.sol";
-import "../interfaces/IAMB.sol";
+import "../../bridge-contracts/contracts/upgradeability/EternalStorage.sol";
+import "../../bridge-contracts/contracts/interfaces/IAMB.sol";
+import "../../bridge-contracts/contracts/upgradeable_contracts/Ownable.sol";
 import "openzeppelin-solidity/contracts/AddressUtils.sol";
-import "./EternalOwnable.sol";
 
-contract AMBMediator is EternalStorage, EternalOwnable {
+contract AMBMediator is EternalStorage, Ownable {
     bytes32 internal constant BRIDGE_CONTRACT = keccak256(abi.encodePacked("bridgeContract"));
     bytes32 internal constant MEDIATOR_CONTRACT = keccak256(abi.encodePacked("mediatorContract"));
     bytes32 internal constant REQUEST_GAS_LIMIT = keccak256(abi.encodePacked("requestGasLimit"));
