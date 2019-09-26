@@ -1,7 +1,7 @@
 const SimpleBridgeKitty = require('../build/contracts/SimpleBridgeKitty')
 const EternalStorageProxy = require('../build/contracts/EternalStorageProxy')
 const HomeMediator = require('../build/contracts/HomeMediator')
-const { deployContract, privateKeyToAddress, web3Home, upgradeProxy, transferOwnership } = require('./deploymentUtils')
+const { deployContract, privateKeyToAddress, web3Home, upgradeProxy, transferBridgeRole } = require('./deploymentUtils')
 
 const { HOME_RPC_URL, DEPLOYMENT_ACCOUNT_PRIVATE_KEY } = process.env
 
@@ -46,7 +46,7 @@ async function deployHome() {
   console.log('[Home] simpleKittyCore Address: ', simpleKittyContract.options.address)
 
   console.log('\n[Home] Transferring ownership of Bridgeable token to HomeMediator contract')
-  await transferOwnership({
+  await transferBridgeRole({
     contract: simpleKittyContract,
     newOwner: homeMediatorStorage.options.address,
     nonce,

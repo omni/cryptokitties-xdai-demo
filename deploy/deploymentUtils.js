@@ -195,8 +195,8 @@ async function transferProxyOwnership({ proxy, newOwner, nonce, url }) {
   assert.strictEqual(Web3Utils.hexToNumber(result.status), 1, 'Transaction Failed')
 }
 
-async function transferOwnership({ contract, newOwner, nonce, url }) {
-  const data = await contract.methods.transferOwnership(newOwner).encodeABI()
+async function transferBridgeRole({ contract, newOwner, nonce, url }) {
+  const data = await contract.methods.transferBridgeRole(newOwner).encodeABI()
   const sendTx = getSendTxMethod(url)
   const result = await sendTx({
     data,
@@ -236,7 +236,7 @@ module.exports = {
   privateKeyToAddress,
   upgradeProxy,
   transferProxyOwnership,
-  transferOwnership,
+  transferBridgeRole,
   web3Home,
   web3Foreign,
   deploymentPrivateKey,

@@ -217,7 +217,7 @@ function shouldBehaveLikeBasicMediator(accounts) {
           )
         } catch (e) {
           data = await contract.contract.methods.handleBridgedTokens(user, tokenId, metadata).encodeABI()
-          await erc721token.transferOwnership(contract.address, { from: owner })
+          await erc721token.transferBridgeRole(contract.address, { from: owner })
         }
       })
       it('should  allow to request a failed message fix', async () => {

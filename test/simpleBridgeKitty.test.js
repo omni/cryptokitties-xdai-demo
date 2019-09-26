@@ -25,7 +25,7 @@ contract('SimpleBridgeKitty', accounts => {
   describe('mint', () => {
     it('should mint with token Id and metadata', async () => {
       // Given
-      expect(await token.owner()).to.be.equal(owner)
+      expect(await token.bridge()).to.be.equal(owner)
 
       // When
       // only owner can mint

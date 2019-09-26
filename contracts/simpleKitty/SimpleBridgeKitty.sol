@@ -1,9 +1,9 @@
 pragma solidity 0.4.24;
 
 import "./SimpleKittyCore.sol";
-import "../kitty/Ownable.sol";
+import "./BridgeRole.sol";
 
-contract SimpleBridgeKitty is Ownable, SimpleKittyCore {
+contract SimpleBridgeKitty is BridgeRole, SimpleKittyCore {
     event Death(uint256 kittyId);
 
     function mint(
@@ -18,7 +18,7 @@ contract SimpleBridgeKitty is Ownable, SimpleKittyCore {
         uint256 _generation,
         uint256 _genes,
         address _owner
-    ) external onlyOwner {
+    ) external onlyBridge {
         _createKitty(
             _tokenId,
             _isReady,
@@ -34,7 +34,7 @@ contract SimpleBridgeKitty is Ownable, SimpleKittyCore {
         );
     }
 
-    function burn(uint256 _tokenId) external onlyOwner {
+    function burn(uint256 _tokenId) external onlyBridge {
         require(_owns(msg.sender, _tokenId));
         // remove kitty
         delete kitties[_tokenId];

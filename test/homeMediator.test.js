@@ -63,7 +63,7 @@ contract('HomeMediator', accounts => {
         { from: owner }
       )
 
-      await token.transferOwnership(contract.address, { from: owner })
+      await token.transferBridgeRole(contract.address, { from: owner })
 
       // When
       // should approve the transfer first
@@ -102,7 +102,7 @@ contract('HomeMediator', accounts => {
         owner
       )
 
-      await token.transferOwnership(contract.address, { from: owner })
+      await token.transferBridgeRole(contract.address, { from: owner })
 
       expect(await token.totalSupply()).to.be.bignumber.equal('0')
 
@@ -194,7 +194,7 @@ contract('HomeMediator', accounts => {
         user,
         { from: owner }
       )
-      await token.transferOwnership(contract.address, { from: owner })
+      await token.transferBridgeRole(contract.address, { from: owner })
 
       expect(await token.ownerOf(tokenId)).to.be.equal(user)
       expect(await token.totalSupply()).to.be.bignumber.equal('1')
