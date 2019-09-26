@@ -20,7 +20,6 @@ contract BasicMediator is Initializable, AMBMediator, ERC721Bridge, Upgradeable,
     ) external returns (bool) {
         require(!isInitialized());
 
-        uintStorage[DEPLOYED_AT_BLOCK] = block.number;
         _setBridgeContract(_bridgeContract);
         _setMediatorContractOnOtherSide(_mediatorContract);
         setErc721token(_erc721token);

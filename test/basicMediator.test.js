@@ -41,7 +41,6 @@ function shouldBehaveLikeBasicMediator(accounts) {
         expect(await contract.erc721token()).to.be.equal(constants.ZERO_ADDRESS)
         expect(await contract.requestGasLimit()).to.be.bignumber.equal('0')
         expect(await contract.owner()).to.be.equal(constants.ZERO_ADDRESS)
-        expect(await contract.deployedAtBlock()).to.be.bignumber.equal('0')
 
         // not valid bridge contract
         await expectRevert.unspecified(
@@ -90,7 +89,6 @@ function shouldBehaveLikeBasicMediator(accounts) {
         expect(await contract.erc721token()).to.be.equal(erc721token.address)
         expect(await contract.requestGasLimit()).to.be.bignumber.equal(maxGasPerTx)
         expect(await contract.owner()).to.be.equal(owner)
-        expect(await contract.deployedAtBlock()).to.be.bignumber.above('0')
       })
       it('only owner can set bridge contract', async function() {
         const contract = this.bridge
