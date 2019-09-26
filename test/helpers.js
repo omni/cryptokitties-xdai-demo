@@ -24,7 +24,7 @@ const metadata =
   '0000000000000000000000000000000000000000000000000000000000000005' + // sireId
   '0000000000000000000000000000000000000000000000000000000000000006' + // generation
   '00005a56b294e64a52e421c928c63218845adac30406314c739c454bd2e731cb' // genes
-
+const nonce = '0x96b6af865cdaa107ede916e237afbedffa5ed36bea84c0e77a33cc28fc2e9c01'
 module.exports = {
   maxGasPerTx,
   tokenId,
@@ -38,5 +38,6 @@ module.exports = {
   generation,
   genes,
   metadata,
-  exampleTxHash
+  exampleTxHash,
+  nonce
 }

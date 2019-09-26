@@ -8,16 +8,21 @@ contract ForeignMediator is BasicMediator {
         bytes memory metadata = getMetadata(_tokenId);
 
         bytes4 methodSelector = IHomeMediator(0).handleBridgedTokens.selector;
-        bytes memory data = abi.encodeWithSelector(methodSelector, _from, _tokenId, metadata);
+        bytes memory data = abi.encodeWithSelector(methodSelector, _from, _tokenId, metadata, nonce());
 
         bytes32 dataHash = keccak256(data);
         setMessageHashTokenId(dataHash, _tokenId);
         setMessageHashRecipient(dataHash, _from);
+        setNonce(dataHash);
 
         bridgeContract().requireToPassMessage(mediatorContractOnOtherSide(), data, requestGasLimit());
     }
 
-    function handleBridgedTokens(address _recipient, uint256 _tokenId) external {
+    function handleBridgedTokens(
+        address _recipient,
+        uint256 _tokenId,
+        bytes32 /* _nonce */
+    ) external {
         require(msg.sender == address(bridgeContract()));
         require(bridgeContract().messageSender() == mediatorContractOnOtherSide());
         erc721token().transfer(_recipient, _tokenId);

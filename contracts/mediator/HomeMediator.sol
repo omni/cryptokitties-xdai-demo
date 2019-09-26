@@ -7,17 +7,23 @@ import "../interfaces/ISimpleBridgeKitty.sol";
 contract HomeMediator is BasicMediator {
     function passMessage(address _from, uint256 _tokenId, bytes _metadata) internal {
         bytes4 methodSelector = IForeignMediator(0).handleBridgedTokens.selector;
-        bytes memory data = abi.encodeWithSelector(methodSelector, _from, _tokenId);
+        bytes memory data = abi.encodeWithSelector(methodSelector, _from, _tokenId, nonce());
 
         bytes32 dataHash = keccak256(data);
         setMessageHashTokenId(dataHash, _tokenId);
         setMessageHashRecipient(dataHash, _from);
         setMessageHashMetadata(dataHash, _metadata);
+        setNonce(dataHash);
 
         bridgeContract().requireToPassMessage(mediatorContractOnOtherSide(), data, requestGasLimit());
     }
 
-    function handleBridgedTokens(address _recipient, uint256 _tokenId, bytes _metadata) external {
+    function handleBridgedTokens(
+        address _recipient,
+        uint256 _tokenId,
+        bytes _metadata,
+        bytes32 /* _nonce */
+    ) external {
         require(msg.sender == address(bridgeContract()));
         require(bridgeContract().messageSender() == mediatorContractOnOtherSide());
 

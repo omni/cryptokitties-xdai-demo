@@ -17,7 +17,8 @@ const {
   generation,
   genes,
   metadata,
-  exampleTxHash
+  exampleTxHash,
+  nonce
 } = require('./helpers')
 
 function shouldBehaveLikeBasicMediator(accounts) {
@@ -198,7 +199,7 @@ function shouldBehaveLikeBasicMediator(accounts) {
           owner
         )
         try {
-          data = await contract.contract.methods.handleBridgedTokens(user, tokenId).encodeABI()
+          data = await contract.contract.methods.handleBridgedTokens(user, tokenId, nonce).encodeABI()
           await erc721token.mint(
             tokenId,
             isReady,
@@ -214,7 +215,7 @@ function shouldBehaveLikeBasicMediator(accounts) {
             { from: owner }
           )
         } catch (e) {
-          data = await contract.contract.methods.handleBridgedTokens(user, tokenId, metadata).encodeABI()
+          data = await contract.contract.methods.handleBridgedTokens(user, tokenId, metadata, nonce).encodeABI()
           await erc721token.transferBridgeRole(contract.address, { from: owner })
         }
       })

@@ -20,7 +20,8 @@ const {
   generation,
   genes,
   metadata,
-  exampleTxHash
+  exampleTxHash,
+  nonce
 } = require('./helpers')
 
 contract('HomeMediator', accounts => {
@@ -109,10 +110,10 @@ contract('HomeMediator', accounts => {
       // When
 
       // must be called from bridge
-      await expectRevert.unspecified(contract.handleBridgedTokens(user, tokenId, metadata, { from: user }))
-      await expectRevert.unspecified(contract.handleBridgedTokens(user, tokenId, metadata, { from: owner }))
+      await expectRevert.unspecified(contract.handleBridgedTokens(user, tokenId, metadata, nonce, { from: user }))
+      await expectRevert.unspecified(contract.handleBridgedTokens(user, tokenId, metadata, nonce, { from: owner }))
 
-      const data = await contract.contract.methods.handleBridgedTokens(user, tokenId, metadata).encodeABI()
+      const data = await contract.contract.methods.handleBridgedTokens(user, tokenId, metadata, nonce).encodeABI()
 
       const failedTxHash = '0x2ebc2ccc755acc8eaf9252e19573af708d644ab63a39619adb080a3500a4ff2e'
 
@@ -204,7 +205,9 @@ contract('HomeMediator', accounts => {
       await expectRevert.unspecified(token.ownerOf(tokenId))
       expect(await token.totalSupply()).to.be.bignumber.equal('0')
 
-      const data = await mediatorContractOnOtherSide.contract.methods.handleBridgedTokens(user, tokenId).encodeABI()
+      const receipt = await web3.eth.getTransactionReceipt(tx)
+      const logs = AMBMock.decodeLogs(receipt.logs)
+      const data = `0x${logs[0].args.encodedData.substr(148, logs[0].args.encodedData.length - 148)}`
 
       // Bridge calls mediator from other side
       await bridgeContract.executeMessageCall(contract.address, mediatorContractOnOtherSide.address, data, tx, 100)
@@ -258,6 +261,26 @@ contract('HomeMediator', accounts => {
       )
       expect(await bridgeContract.messageCallStatus(otherTxHash)).to.be.equal(false)
       expect(await token.totalSupply()).to.be.bignumber.equal('1')
+
+      // Re send token to know that dataHash is different even if same tokenId and metadata is used
+      await token.approve(contract.address, tokenId, { from: user })
+      const { tx } = await contract.transferToken(user, tokenId, { from: user })
+      await expectRevert.unspecified(token.ownerOf(tokenId))
+      expect(await token.totalSupply()).to.be.bignumber.equal('0')
+
+      const receipt = await web3.eth.getTransactionReceipt(tx)
+      const logs = AMBMock.decodeLogs(receipt.logs)
+      const data = `0x${logs[0].args.encodedData.substr(148, logs[0].args.encodedData.length - 148)}`
+
+      // Bridge calls mediator from other side
+      await bridgeContract.executeMessageCall(contract.address, mediatorContractOnOtherSide.address, data, tx, 100)
+      // Message failed
+      expect(await bridgeContract.messageCallStatus(tx)).to.be.equal(false)
+
+      // mediator from other side should use this dataHash to request fix the failed message
+      const newDataHash = await bridgeContract.failedMessageDataHash(tx)
+
+      expect(newDataHash).not.to.be.equal(dataHash)
     })
     it('should be called by bridge', async () => {
       await expectRevert.unspecified(contract.fixFailedMessage(dataHash, { from: owner }))

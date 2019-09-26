@@ -3,12 +3,14 @@ pragma solidity 0.4.24;
 import "../../bridge-contracts/contracts/upgradeable_contracts/Initializable.sol";
 import "../../bridge-contracts/contracts/upgradeable_contracts/Claimable.sol";
 import "../../bridge-contracts/contracts/upgradeable_contracts/Upgradeable.sol";
+import "../../bridge-contracts/contracts/libraries/Bytes.sol";
 import "./AMBMediator.sol";
 import "./ERC721Bridge.sol";
 
 contract BasicMediator is Initializable, AMBMediator, ERC721Bridge, Upgradeable, Claimable {
     event FailedMessageFixed(bytes32 indexed dataHash, address recipient, uint256 tokenId);
 
+    bytes32 internal constant NONCE = keccak256(abi.encodePacked("nonce"));
     bytes4 internal constant GET_KITTY = 0xe98b7f4d; // getKitty(uint256)
 
     function initialize(
@@ -25,6 +27,7 @@ contract BasicMediator is Initializable, AMBMediator, ERC721Bridge, Upgradeable,
         setErc721token(_erc721token);
         _setRequestGasLimit(_requestGasLimit);
         setOwner(_owner);
+        setNonce(keccak256(abi.encodePacked(address(this))));
         setInitialize();
 
         return isInitialized();
@@ -72,6 +75,14 @@ contract BasicMediator is Initializable, AMBMediator, ERC721Bridge, Upgradeable,
                     revert(0, 0)
                 }
         }
+    }
+
+    function nonce() internal view returns (bytes32) {
+        return Bytes.bytesToBytes32(bytesStorage[NONCE]);
+    }
+
+    function setNonce(bytes32 _hash) internal {
+        bytesStorage[NONCE] = abi.encodePacked(_hash);
     }
 
     function setMessageHashTokenId(bytes32 _hash, uint256 _tokenId) internal {
