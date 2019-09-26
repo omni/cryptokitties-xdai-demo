@@ -39,13 +39,12 @@ contract BasicMediator is Initializable, AMBMediator, ERC721Bridge, Upgradeable,
         return bytes4(keccak256(abi.encodePacked("nft-to-nft-amb")));
     }
 
-    function transferToken(uint256 _tokenId) external {
+    function transferToken(address _from, uint256 _tokenId) external {
         ERC721 token = erc721token();
-        address from = msg.sender;
         address to = address(this);
 
-        token.transferFrom(from, to, _tokenId);
-        bridgeSpecificActionsOnTokenTransfer(from, _tokenId);
+        token.transferFrom(_from, to, _tokenId);
+        bridgeSpecificActionsOnTokenTransfer(_from, _tokenId);
     }
 
     /**

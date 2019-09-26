@@ -65,11 +65,11 @@ contract('ForeignMediator', accounts => {
 
       // When
       // should approve the transfer first
-      await expectRevert.unspecified(contract.transferToken(tokenId, { from: user }))
+      await expectRevert.unspecified(contract.transferToken(user, tokenId, { from: user }))
 
       await token.approve(contract.address, tokenId, { from: user })
 
-      const { tx } = await contract.transferToken(tokenId, { from: user })
+      const { tx } = await contract.transferToken(user, tokenId, { from: user })
 
       // Then
       await expectEvent.inTransaction(tx, SimpleBridgeKitty, 'Transfer', {
@@ -188,7 +188,7 @@ contract('ForeignMediator', accounts => {
       expect(await token.ownerOf(tokenId)).to.be.equal(user)
       // User transfer token to mediator and generate amb event
       await token.approve(contract.address, tokenId, { from: user })
-      const { tx } = await contract.transferToken(tokenId, { from: user })
+      const { tx } = await contract.transferToken(user, tokenId, { from: user })
       expect(await token.ownerOf(tokenId)).to.be.equal(contract.address)
 
       const data = await mediatorContractOnOtherSide.contract.methods

@@ -67,11 +67,11 @@ contract('HomeMediator', accounts => {
 
       // When
       // should approve the transfer first
-      await expectRevert.unspecified(contract.transferToken(tokenId, { from: user }))
+      await expectRevert.unspecified(contract.transferToken(user, tokenId, { from: user }))
 
       await token.approve(contract.address, tokenId, { from: user })
 
-      const { tx } = await contract.transferToken(tokenId, { from: user })
+      const { tx } = await contract.transferToken(user, tokenId, { from: user })
 
       // Then
       await expectEvent.inTransaction(tx, SimpleBridgeKitty, 'Transfer', {
@@ -200,7 +200,7 @@ contract('HomeMediator', accounts => {
       expect(await token.totalSupply()).to.be.bignumber.equal('1')
       // User transfer token to mediator, it burns the token and generate amb event
       await token.approve(contract.address, tokenId, { from: user })
-      const { tx } = await contract.transferToken(tokenId, { from: user })
+      const { tx } = await contract.transferToken(user, tokenId, { from: user })
       await expectRevert.unspecified(token.ownerOf(tokenId))
       expect(await token.totalSupply()).to.be.bignumber.equal('0')
 
