@@ -195,8 +195,8 @@ async function transferProxyOwnership({ proxy, newOwner, nonce, url }) {
   assert.strictEqual(Web3Utils.hexToNumber(result.status), 1, 'Transaction Failed')
 }
 
-async function transferOwnership({ contract, newOwner, nonce, url }) {
-  const data = await contract.methods.transferOwnership(newOwner).encodeABI()
+async function transferBridgeRole({ contract, newOwner, nonce, url }) {
+  const data = await contract.methods.transferBridgeRole(newOwner).encodeABI()
   const sendTx = getSendTxMethod(url)
   const result = await sendTx({
     data,
@@ -212,6 +212,23 @@ function getSendTxMethod(url) {
   return url === HOME_RPC_URL ? sendRawTxHome : sendRawTxForeign
 }
 
+const kittyGenes = [
+  '461318606473215840474968038713412278792841200610013055040007908862876014',
+  '512901570795906580689310042942192685302828800779079863559617410586062221',
+  '456123814460010858370996918295523736710893964491134685860209207735135662',
+  '623347887640772406912616247570945954300391612998914019334437441678817675',
+  '623327769702602566148110117488157993388740168622469003102795169878388139',
+  '516517468280385478902426949869045996034332056826094284352752576550613389',
+  '461303492617760133525700505199185512215446852893161871027943135841299852',
+  '516350753935039751872377244600559998302956049058903453328289625078609292',
+  '516350706387040918774838507181320473800432871454139137641571763026803053',
+  '623315925723314209099500395652252912896485976535230435375457673062846598'
+]
+
+function getKittyGene(i) {
+  return kittyGenes[i % kittyGenes.length]
+}
+
 module.exports = {
   deployContract,
   sendRawTxHome,
@@ -219,8 +236,9 @@ module.exports = {
   privateKeyToAddress,
   upgradeProxy,
   transferProxyOwnership,
-  transferOwnership,
+  transferBridgeRole,
   web3Home,
   web3Foreign,
-  deploymentPrivateKey
+  deploymentPrivateKey,
+  getKittyGene
 }

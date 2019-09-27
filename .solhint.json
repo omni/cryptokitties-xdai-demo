@@ -8,6 +8,7 @@
     "not-rely-on-time": "off",
     "const-name-snakecase": "off",
     "no-inline-assembly": "off",
+    "multiple-sends": "off",
     "compiler-version": ["error", "0.4.24"]
   }
 }

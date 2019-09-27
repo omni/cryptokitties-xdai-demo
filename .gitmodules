@@ -1,0 +1,3 @@
+[submodule "bridge-contracts"]
+	path = bridge-contracts
+	url = https://github.com/poanetwork/poa-bridge-contracts.git
