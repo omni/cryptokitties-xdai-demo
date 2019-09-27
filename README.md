@@ -2,7 +2,7 @@
 
 #### Clone the repository
 ```bash
-git clone https://github.com/poanetwork/cryptokitties-xdai-demo.git
+git clone --recursive https://github.com/poanetwork/cryptokitties-xdai-demo.git
 ```
 
 #### Initialize submodule and install dependencies
