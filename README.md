@@ -7,7 +7,7 @@ git clone --recursive https://github.com/poanetwork/cryptokitties-xdai-demo.git
 
 #### Initialize submodule and install dependencies
 ```bash
-yarn initialize
+yarn
 ```
 
 #### Compile contracts

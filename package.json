@@ -4,7 +4,6 @@
   "repository": "https://github.com/poanetwork/cryptokitties-xdai-demo.git",
   "license": "GPL-3.0-only",
   "scripts": {
-    "initialize": "git submodule update --init && yarn install",
     "compile": "truffle compile",
     "flatten": "bash scripts/flatten.sh",
     "deploy": "node deploy/index.js",
