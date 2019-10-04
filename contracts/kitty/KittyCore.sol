@@ -143,4 +143,9 @@ contract KittyCore is KittyMinting, URIMetadata {
             cfoAddress.send(balance - subtractFees);
         }
     }
+
+    function tokenURI(uint256 _tokenId) external view returns (string) {
+        require(_exists(_tokenId));
+        return _tokenURI(_tokenId);
+    }
 }

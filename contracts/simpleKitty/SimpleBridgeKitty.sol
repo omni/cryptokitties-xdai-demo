@@ -47,4 +47,9 @@ contract SimpleBridgeKitty is BridgeRole, SimpleKittyCore, URIMetadata {
         ownershipTokenCount[msg.sender]--;
         emit Death(_tokenId);
     }
+
+    function tokenURI(uint256 _tokenId) external view returns (string) {
+        require(_exists(_tokenId));
+        return _tokenURI(_tokenId);
+    }
 }

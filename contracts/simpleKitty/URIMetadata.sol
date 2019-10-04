@@ -1,7 +1,7 @@
 pragma solidity 0.4.24;
 
 contract URIMetadata {
-    function tokenURI(uint256 _tokenId) external view returns (string) {
+    function _tokenURI(uint256 _tokenId) internal pure returns (string) {
         return strConcat("https://api.cryptokitties.co/kitties/", uintToString(_tokenId));
     }
 

@@ -222,4 +222,8 @@ contract KittyBase is KittyAccessControl {
         require(secs < cooldowns[0]);
         secondsPerBlock = secs;
     }
+
+    function _exists(uint256 _tokenId) internal view returns (bool) {
+        return kittyIndexToOwner[_tokenId] != address(0);
+    }
 }
