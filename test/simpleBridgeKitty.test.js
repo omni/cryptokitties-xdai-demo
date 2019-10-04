@@ -384,4 +384,11 @@ contract('SimpleBridgeKitty', accounts => {
       })
     })
   })
+  describe('tokenURI', () => {
+    it('should return string URI of token', async () => {
+      expect(await token.tokenURI(1)).to.be.equal('https://api.cryptokitties.co/kitties/1')
+      expect(await token.tokenURI(12345)).to.be.equal('https://api.cryptokitties.co/kitties/12345')
+      expect(await token.tokenURI(1714022)).to.be.equal('https://api.cryptokitties.co/kitties/1714022')
+    })
+  })
 })

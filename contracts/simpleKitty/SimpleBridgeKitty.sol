@@ -2,8 +2,9 @@ pragma solidity 0.4.24;
 
 import "./SimpleKittyCore.sol";
 import "./BridgeRole.sol";
+import "./URIMetadata.sol";
 
-contract SimpleBridgeKitty is BridgeRole, SimpleKittyCore {
+contract SimpleBridgeKitty is BridgeRole, SimpleKittyCore, URIMetadata {
     event Death(uint256 kittyId);
 
     function mint(
