@@ -138,4 +138,8 @@ contract SimpleKittyBase {
 
         return _tokenId;
     }
+
+    function _exists(uint256 _tokenId) internal view returns (bool) {
+        return kittyIndexToOwner[_tokenId] != address(0);
+    }
 }

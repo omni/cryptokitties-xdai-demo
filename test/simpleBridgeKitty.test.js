@@ -384,4 +384,65 @@ contract('SimpleBridgeKitty', accounts => {
       })
     })
   })
+  describe('tokenURI', () => {
+    it('should return string URI of token', async () => {
+      // should fail if token does not exists
+      await expectRevert.unspecified(token.tokenURI(1))
+
+      await token.mint(
+        1,
+        isReady,
+        cooldownIndex,
+        nextActionAt,
+        siringWithId,
+        birthTime,
+        matronId,
+        sireId,
+        generation,
+        genes,
+        user,
+        { from: owner }
+      )
+
+      expect(await token.tokenURI(1)).to.be.equal('https://api.cryptokitties.co/kitties/1')
+
+      await expectRevert.unspecified(token.tokenURI(12345))
+
+      await token.mint(
+        12345,
+        isReady,
+        cooldownIndex,
+        nextActionAt,
+        siringWithId,
+        birthTime,
+        matronId,
+        sireId,
+        generation,
+        genes,
+        user,
+        { from: owner }
+      )
+
+      expect(await token.tokenURI(12345)).to.be.equal('https://api.cryptokitties.co/kitties/12345')
+
+      await expectRevert.unspecified(token.tokenURI(1714022))
+
+      await token.mint(
+        1714022,
+        isReady,
+        cooldownIndex,
+        nextActionAt,
+        siringWithId,
+        birthTime,
+        matronId,
+        sireId,
+        generation,
+        genes,
+        user,
+        { from: owner }
+      )
+
+      expect(await token.tokenURI(1714022)).to.be.equal('https://api.cryptokitties.co/kitties/1714022')
+    })
+  })
 })

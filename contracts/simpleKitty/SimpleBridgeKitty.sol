@@ -2,8 +2,9 @@ pragma solidity 0.4.24;
 
 import "./SimpleKittyCore.sol";
 import "./BridgeRole.sol";
+import "./URIMetadata.sol";
 
-contract SimpleBridgeKitty is BridgeRole, SimpleKittyCore {
+contract SimpleBridgeKitty is BridgeRole, SimpleKittyCore, URIMetadata {
     event Death(uint256 kittyId);
 
     function mint(
@@ -45,5 +46,10 @@ contract SimpleBridgeKitty is BridgeRole, SimpleKittyCore {
         // reduce owner token account
         ownershipTokenCount[msg.sender]--;
         emit Death(_tokenId);
+    }
+
+    function tokenURI(uint256 _tokenId) external view returns (string) {
+        require(_exists(_tokenId));
+        return _tokenURI(_tokenId);
     }
 }
